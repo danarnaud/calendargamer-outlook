@@ -72,4 +72,13 @@ SUMMARY:TESTE - Temporada Longa
 DESCRIPTION:Evento para validar exibição contínua.
 END:VEVENT
 
+BEGIN:VEVENT
+UID:pokemon-presents-2026
+DTSTAMP:20260609T120000Z
+DTSTART;TZID=America/Sao_Paulo:20260812T100000
+DTEND;TZID=America/Sao_Paulo:20260812T110000
+SUMMARY:Pokémon Presents
+DESCRIPTION:Transmissão oficial da The Pokémon Company.
+END:VEVENT
+
 END:VCALENDAR
