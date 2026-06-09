@@ -1,22 +1,33 @@
+import json
 from datetime import datetime
 
-with open("gamer.ics", "w", encoding="utf-8") as f:
-    f.write(
-f"""BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Gamer Hub//PT-BR//EN
+with open("data/events.json", "r", encoding="utf-8") as f:
+    events = json.load(f)
 
-BEGIN:VEVENT
-UID:teste-python
-DTSTAMP:{datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}
-DTSTART;VALUE=DATE:20260610
-DTEND;VALUE=DATE:20260611
-SUMMARY:Evento criado pelo Python
-DESCRIPTION:Primeiro evento gerado automaticamente.
-END:VEVENT
+lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Gamer Hub//PT-BR//EN"
+]
 
-END:VCALENDAR
-"""
-)
+for event in events:
+    start = event["start"].replace("-", "")
+    end = event["end"].replace("-", "")
 
-print("Calendário gerado.")
+    lines.extend([
+        "BEGIN:VEVENT",
+        f"UID:{event['uid']}",
+        f"DTSTAMP:{datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}",
+        f"DTSTART;VALUE=DATE:{start}",
+        f"DTEND;VALUE=DATE:{end}",
+        f"SUMMARY:{event['title']}",
+        f"DESCRIPTION:{event['description']}",
+        "END:VEVENT"
+    ])
+
+lines.append("END:VCALENDAR")
+
+with open("docs/gamer.ics", "w", encoding="utf-8") as f:
+    f.write("\n".join(lines))
+
+print(f"{len(events)} eventos gerados.")
