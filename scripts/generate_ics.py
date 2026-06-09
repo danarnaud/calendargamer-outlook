@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, UTC
 
 with open("data/events.json", "r", encoding="utf-8") as f:
     events = json.load(f)
@@ -7,7 +7,9 @@ with open("data/events.json", "r", encoding="utf-8") as f:
 lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Gamer Hub//PT-BR//EN"
+    "PRODID:-//Gamer Hub//PT-BR//EN",
+    "X-WR-CALNAME:Gamer Hub",
+    "X-WR-CALDESC:Calendário Gamer"
 ]
 
 for event in events:
@@ -17,7 +19,7 @@ for event in events:
     lines.extend([
         "BEGIN:VEVENT",
         f"UID:{event['uid']}",
-        f"DTSTAMP:{datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}",
+        f"DTSTAMP:{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}",
         f"DTSTART;VALUE=DATE:{start}",
         f"DTEND;VALUE=DATE:{end}",
         f"SUMMARY:{event['title']}",
